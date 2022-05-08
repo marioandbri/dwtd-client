@@ -1,24 +1,27 @@
 import { Center } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
+import { useAppointmentDispatch } from "../context/AppointmentProvider";
+import { ActionKind } from "../types.d";
 
 type Props = {
-	selectedDateString: string;
-	setSelectedDateString: (arg0: string) => void;
+	setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const MyCalendar: React.FC<Props> = ({
-	selectedDateString,
-	setSelectedDateString,
-}) => {
+const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 	const [value, setValue] = useState(new Date());
+	const dispatch = useAppointmentDispatch();
 
 	return (
 		<Center>
 			<Calendar
 				value={value}
 				onChange={(date: Date) => {
-					setSelectedDateString(date.toISOString().replace(/T.+Z$/, ""));
+					dispatch({
+						payload: date.toISOString().replace(/T.+Z$/, ""),
+						type: ActionKind.SET_DATE,
+					});
+					setOpened(true);
 					setValue(date);
 				}}
 				fullWidth

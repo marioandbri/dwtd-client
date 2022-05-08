@@ -1,29 +1,37 @@
-import { Input, Stack } from "@mantine/core";
-import React, { ChangeEvent } from "react";
-import { UserData } from "../type";
+import { Button, Input, Stack } from "@mantine/core";
+import React, { ChangeEvent, useState } from "react";
+import { UserData } from "../types";
 
 type Props = {
-	handleInput: (
-		e: ChangeEvent<HTMLInputElement> & { target: { name: keyof UserData } }
-	) => void;
+	displayHours: () => void;
 };
 
-const UserDataForm: React.FC<Props> = ({ handleInput }) => {
+const UserDataForm: React.FC<Props> = ({ displayHours }) => {
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+
 	return (
 		<>
 			<Stack>
 				<Input
-					name="name"
-					type={"text"}
+					value={name}
+					type="text"
 					placeholder="Your name"
-					onChange={handleInput}
+					icon={<>🧑</>}
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setName(e.target.value)
+					}
 				/>
 				<Input
-					name="email"
-					type={"email"}
+					value={email}
+					type="email"
 					placeholder="Your email"
-					onChange={handleInput}
+					icon={<>📧</>}
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setEmail(e.target.value)
+					}
 				/>
+				<Button>Set Appointment</Button>
 			</Stack>
 		</>
 	);

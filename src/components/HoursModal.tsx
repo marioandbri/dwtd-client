@@ -3,27 +3,17 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import FormModal from "./FormModal";
 import HoursList from "./HoursList";
 
-type Props = {
-	opened: boolean;
-	closeModal: () => void;
-	selectHour: (arg0: string) => void;
-};
+type Props = {};
 
-const HoursModal: React.FC<Props> = ({ opened, closeModal, selectHour }) => {
+const HoursDisplay: React.FC<Props> = ({}) => {
 	return (
 		<>
-			<Modal
-				opened={opened}
-				onClose={closeModal}
-				title="Hours available for scheduling"
-			>
-				<Title order={3}>
-					Please select the desired hour for the appointment:
-				</Title>
-				<HoursList selectHour={selectHour} />
-			</Modal>
+			<Title mb={"sm"} sx={{ fontWeight: 300 }} order={5}>
+				Please select the desired hour for the appointment:
+			</Title>
+			<HoursList />
 		</>
 	);
 };
 
-export default HoursModal;
+export default HoursDisplay;
