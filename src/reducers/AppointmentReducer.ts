@@ -1,5 +1,11 @@
-import { ActionKind, AppointmentAction, AppointmentStore } from "../types.d";
+import { AppointmentAction, AppointmentStore } from "../types";
 
+export enum ActionKind {
+	SET_DATE,
+	SET_HOUR,
+	SET_USERDATA,
+	SET_CONFIRM_DIALOG,
+}
 export const initialStore: AppointmentStore = {
 	appointmentDate: "",
 	appointmentHour: "",
@@ -7,6 +13,7 @@ export const initialStore: AppointmentStore = {
 		name: "",
 		email: "",
 	},
+	confirmDialog: false,
 };
 
 export const AppointmentReducer = (
@@ -28,6 +35,11 @@ export const AppointmentReducer = (
 			return {
 				...state,
 				userData: action.payload,
+			};
+		case ActionKind.SET_CONFIRM_DIALOG:
+			return {
+				...state,
+				confirmDialog: action.payload,
 			};
 		default:
 			return state;

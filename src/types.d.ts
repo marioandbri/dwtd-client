@@ -7,11 +7,7 @@ export interface AppointmentStore {
 	appointmentDate: string;
 	appointmentHour: string;
 	userData: UserData;
-}
-export enum ActionKind {
-	SET_DATE,
-	SET_HOUR,
-	SET_USERDATA,
+	confirmDialog: boolean;
 }
 
 export interface AppointmentAction {

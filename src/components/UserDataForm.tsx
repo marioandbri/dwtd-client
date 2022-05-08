@@ -1,5 +1,7 @@
-import { Button, Input, Stack } from "@mantine/core";
+import { Button, Group, Input, Stack } from "@mantine/core";
 import React, { ChangeEvent, useState } from "react";
+import { useAppointmentDispatch } from "../context/AppointmentProvider";
+import { ActionKind } from "../reducers/AppointmentReducer";
 import { UserData } from "../types";
 
 type Props = {
@@ -9,6 +11,12 @@ type Props = {
 const UserDataForm: React.FC<Props> = ({ displayHours }) => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
+	const dispatch = useAppointmentDispatch();
+
+	const setAppointmentData = () => {
+		dispatch({ payload: { name, email }, type: ActionKind.SET_USERDATA });
+		dispatch({ payload: true, type: ActionKind.SET_CONFIRM_DIALOG });
+	};
 
 	return (
 		<>
@@ -31,7 +39,12 @@ const UserDataForm: React.FC<Props> = ({ displayHours }) => {
 						setEmail(e.target.value)
 					}
 				/>
-				<Button>Set Appointment</Button>
+				<Group position="center" spacing="lg">
+					<Button color={"yellow"} onClick={displayHours}>
+						Change hour
+					</Button>
+					<Button onClick={setAppointmentData}>Set Appointment</Button>
+				</Group>
 			</Stack>
 		</>
 	);

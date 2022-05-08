@@ -2,7 +2,7 @@ import { Center } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import React, { useState } from "react";
 import { useAppointmentDispatch } from "../context/AppointmentProvider";
-import { ActionKind } from "../types.d";
+import { ActionKind } from "../reducers/AppointmentReducer";
 
 type Props = {
 	setOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +15,7 @@ const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 	return (
 		<Center>
 			<Calendar
+				sx={{ width: "85%" }}
 				value={value}
 				onChange={(date: Date) => {
 					dispatch({
@@ -27,7 +28,7 @@ const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 				fullWidth
 				size="xl"
 				styles={(theme) => ({
-					day: { borderRadius: 4, height: 70, fontSize: theme.fontSizes.lg },
+					day: { borderRadius: 4, height: 60, fontSize: theme.fontSizes.lg },
 					weekday: { fontSize: theme.fontSizes.lg },
 					weekdayCell: {
 						fontSize: theme.fontSizes.xl,
@@ -40,7 +41,7 @@ const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 								? theme.colors.dark[4]
 								: theme.colors.gray[2]
 						}`,
-						height: 70,
+						height: 50,
 					},
 				})}
 			/>

@@ -1,7 +1,7 @@
 import { Stack, Button } from "@mantine/core";
 import React from "react";
 import { useAppointmentDispatch } from "../context/AppointmentProvider";
-import { ActionKind } from "../types.d";
+import { ActionKind } from "../reducers/AppointmentReducer";
 import { officeHours } from "../utils/hour";
 
 type Props = {
