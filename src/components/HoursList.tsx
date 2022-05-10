@@ -1,7 +1,13 @@
-import { Stack, Button } from "@mantine/core";
-import React from "react";
-import { useAppointmentDispatch } from "../context/AppointmentProvider";
+import { Stack, Button, LoadingOverlay } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { server } from "../constants";
+import {
+	useAppointmentDispatch,
+	useAppointmentStore,
+} from "../context/AppointmentProvider";
 import { ActionKind } from "../reducers/AppointmentReducer";
+import { Appointment } from "../types";
+import { isUnavailable } from "../utils/appointments";
 import { officeHours } from "../utils/hour";
 
 type Props = {
@@ -10,20 +16,49 @@ type Props = {
 
 const HoursList: React.FC<Props> = ({ displayUserForm }) => {
 	const dispatch = useAppointmentDispatch();
+	const { appointmentDate } = useAppointmentStore();
+	const [loading, isLoading] = useState(false);
+	const [hoursUnavailable, setHoursUnavailable] = useState<Appointment[]>([]);
+
+	const fetchHours = async () => {
+		const query = new URLSearchParams({ date: appointmentDate });
+		const response = await fetch(`${server}/api/appointments?${query}`);
+		const result: Appointment[] | null = await response.json();
+		if (response.ok) {
+			setHoursUnavailable(result!);
+			isLoading(false);
+		} else {
+			console.error("error", result);
+		}
+	};
+
+	useEffect(() => {
+		isLoading(true);
+		fetchHours();
+
+		return () => {};
+	}, []);
+
 	return (
-		<Stack>
-			{officeHours.map((e, index) => (
-				<Button
-					key={index}
-					onClick={() => {
-						dispatch({ payload: e, type: ActionKind.SET_HOUR });
-						displayUserForm();
-					}}
-				>
-					{e}
-				</Button>
-			))}
-		</Stack>
+		<div style={{ position: "relative", height: "100%", width: "100%" }}>
+			<LoadingOverlay visible={loading}></LoadingOverlay>
+			<Stack>
+				{officeHours.map((hour, index) => {
+					return (
+						<Button
+							disabled={isUnavailable(hour, hoursUnavailable)}
+							key={index}
+							onClick={() => {
+								dispatch({ payload: hour, type: ActionKind.SET_HOUR });
+								displayUserForm();
+							}}
+						>
+							{hour}
+						</Button>
+					);
+				})}
+			</Stack>
+		</div>
 	);
 };
 

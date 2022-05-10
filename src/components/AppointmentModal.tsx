@@ -1,6 +1,8 @@
-import { Modal, Transition } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import React, { PropsWithChildren, useState } from "react";
-import ConfirmDialog from "./ConfirnDialog";
+import { useAppointmentDispatch } from "../context/AppointmentProvider";
+import { ActionKind } from "../reducers/AppointmentReducer";
+import ConfirmDialog from "./ConfirmDialog";
 import HoursList from "./HoursList";
 import UserDataForm from "./UserDataForm";
 
@@ -12,21 +14,22 @@ type Props = {
 const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 	opened,
 	closeModal,
-	children,
 }) => {
+	const dispatch = useAppointmentDispatch();
 	const [isUserFormVisible, setIsUserFormVisible] = useState(false);
 	const displayHours = () => setIsUserFormVisible(false);
 	const displayUserForm = () => setIsUserFormVisible(true);
+
 	const resetModal = () => {
 		closeModal();
 		setIsUserFormVisible(false);
+		dispatch({ payload: null, type: ActionKind.REINITIALIZE });
 	};
+
 	const isHoursVisible = opened && !isUserFormVisible;
 
 	return (
 		<>
-			{/* <Modal opened={opened} onClose={resetModal} title={title}> */}
-
 			<Modal
 				transition={"slide-down"}
 				opened={isHoursVisible}
@@ -44,7 +47,7 @@ const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 			>
 				<UserDataForm displayHours={displayHours} />
 			</Modal>
-			{/* </Modal> */}
+			<ConfirmDialog closeModal={resetModal} />
 		</>
 	);
 };

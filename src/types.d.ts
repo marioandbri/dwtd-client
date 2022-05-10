@@ -1,4 +1,13 @@
+import { CSSProperties } from "@mantine/styles/lib/tss/types/css-object";
+import React from "react";
+
 export type UserData = {
+	name: string;
+	email: string;
+};
+
+export type Appointment = {
+	datetime: Date;
 	name: string;
 	email: string;
 };

@@ -17,6 +17,7 @@ const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 			<Calendar
 				sx={{ width: "85%" }}
 				value={value}
+				excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6}
 				onChange={(date: Date) => {
 					dispatch({
 						payload: date.toISOString().replace(/T.+Z$/, ""),

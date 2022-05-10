@@ -1,16 +1,11 @@
 import "./App.css";
 import Layout from "./components/Layout";
 import MyCalendar from "./components/Calendar";
-import { ChangeEvent, useState } from "react";
-import { UserData } from "./types";
+import { useState } from "react";
 import AppointmentModal from "./components/AppointmentModal";
-import ConfirmDialog from "./components/ConfirnDialog";
-import {
-	useAppointmentDispatch,
-	useAppointmentStore,
-} from "./context/AppointmentProvider";
-import { ActionKind } from "./reducers/AppointmentReducer";
+import ConfirmDialog from "./components/ConfirmDialog";
 import dayjs from "dayjs";
+import { NotificationsProvider } from "@mantine/notifications";
 
 function App() {
 	dayjs.locale("en-us");
@@ -19,15 +14,12 @@ function App() {
 		setOpened(false);
 	};
 
-	const handleInput = (
-		e: ChangeEvent<HTMLInputElement> & { target: { name: keyof UserData } }
-	) => {};
-
 	return (
 		<Layout>
-			<AppointmentModal opened={opened} closeModal={closeModal} />
-			<ConfirmDialog />
-			<MyCalendar setOpened={setOpened} />
+			<NotificationsProvider>
+				<AppointmentModal opened={opened} closeModal={closeModal} />
+				<MyCalendar setOpened={setOpened} />
+			</NotificationsProvider>
 		</Layout>
 	);
 }

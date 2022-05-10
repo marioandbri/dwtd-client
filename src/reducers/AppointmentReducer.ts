@@ -5,6 +5,7 @@ export enum ActionKind {
 	SET_HOUR,
 	SET_USERDATA,
 	SET_CONFIRM_DIALOG,
+	REINITIALIZE,
 }
 export const initialStore: AppointmentStore = {
 	appointmentDate: "",
@@ -41,6 +42,8 @@ export const AppointmentReducer = (
 				...state,
 				confirmDialog: action.payload,
 			};
+		case ActionKind.REINITIALIZE:
+			return initialStore;
 		default:
 			return state;
 	}

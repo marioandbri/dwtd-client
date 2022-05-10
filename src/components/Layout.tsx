@@ -1,10 +1,4 @@
-import {
-	AppShell,
-	Header,
-	MantineProvider,
-	Navbar,
-	Title,
-} from "@mantine/core";
+import { AppShell, Header, MantineProvider, Title } from "@mantine/core";
 import React, { ReactNode } from "react";
 type Props = {
 	children: ReactNode;
