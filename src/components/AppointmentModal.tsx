@@ -40,7 +40,7 @@ const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 	const resetAndCloseModal = () => {
 		closeModal();
 		setIsUserFormVisible(false);
-		dispatch({ payload: null, type: ActionKind.REINITIALIZE });
+		dispatch({ type: ActionKind.REINITIALIZE });
 	};
 	/**
 	 *  Handles when the HoursList Component is visible
