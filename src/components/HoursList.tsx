@@ -22,6 +22,7 @@ const HoursList: React.FC<Props> = ({ displayUserForm }) => {
 
 	const fetchHours = async () => {
 		const query = new URLSearchParams({ date: appointmentDate });
+		if (appointmentDate === "") return;
 		const response = await fetch(`${server}/api/appointments?${query}`);
 		const result: Appointment[] | null = await response.json();
 		if (response.ok) {
