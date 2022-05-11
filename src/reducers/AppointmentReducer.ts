@@ -1,4 +1,4 @@
-import { AppointmentAction, AppointmentStore } from "../types";
+import { AppointmentAction, AppointmentStore, UserData } from "../types";
 
 export enum ActionKind {
 	SET_DATE,
@@ -25,22 +25,22 @@ export const AppointmentReducer = (
 		case ActionKind.SET_DATE:
 			return {
 				...state,
-				appointmentDate: action.payload,
+				appointmentDate: action.payload as string,
 			};
 		case ActionKind.SET_HOUR:
 			return {
 				...state,
-				appointmentHour: action.payload,
+				appointmentHour: action.payload as string,
 			};
 		case ActionKind.SET_USERDATA:
 			return {
 				...state,
-				userData: action.payload,
+				userData: action.payload as UserData,
 			};
 		case ActionKind.SET_CONFIRM_DIALOG:
 			return {
 				...state,
-				confirmDialog: action.payload,
+				confirmDialog: action.payload as boolean,
 			};
 		case ActionKind.REINITIALIZE:
 			return initialStore;

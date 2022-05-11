@@ -88,7 +88,7 @@ const ConfirmDialog: React.FC<Props> = ({ closeModal }) => {
 				color: "teal",
 				loading: loading,
 			});
-			dispatch({ payload: null, type: ActionKind.REINITIALIZE });
+			dispatch({ type: ActionKind.REINITIALIZE });
 			closeModal();
 		} else {
 			updateNotification({

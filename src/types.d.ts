@@ -67,5 +67,5 @@ export interface AppointmentAction {
 	/**
 	 * Data payload to update the store
 	 */
-	payload: string | boolean | UserData | null;
+	payload?: string | boolean | UserData;
 }
