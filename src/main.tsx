@@ -1,5 +1,3 @@
-import { Notification } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";

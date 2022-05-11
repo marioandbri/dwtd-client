@@ -11,10 +11,18 @@ type Props = {
 	displayHours: () => void;
 };
 
+/**
+ * Component responsible for rendering the form and inputs to collect the user data, and the state for the input validation
+ * @param props
+ * @returns A form with inputs for user's name and email
+ */
 const UserDataForm: React.FC<Props> = ({ displayHours }) => {
 	const dispatch = useAppointmentDispatch();
 	const { name, email } = useAppointmentStore().userData;
 
+	/**
+	 * Object with the inputs values and state setters, error status, error messages, and validation Rules
+	 */
 	const form = useForm({
 		initialValues: {
 			name: name || "",
@@ -30,6 +38,9 @@ const UserDataForm: React.FC<Props> = ({ displayHours }) => {
 		},
 	});
 
+	/**
+	 * Updates the user's data
+	 */
 	const updateUserData = () => {
 		dispatch({
 			payload: { name: form.values.name, email: form.values.email },
@@ -37,6 +48,9 @@ const UserDataForm: React.FC<Props> = ({ displayHours }) => {
 		});
 	};
 
+	/**
+	 * Sets the user's data and renders the confirm dialog
+	 */
 	const setAppointmentData = () => {
 		dispatch({
 			payload: { name: form.values.name, email: form.values.email },

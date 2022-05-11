@@ -8,12 +8,16 @@ import {
 	useAppointmentStore,
 } from "../context/AppointmentProvider";
 import { ActionKind } from "../reducers/AppointmentReducer";
-import { parseAppointmentDateTime } from "../utils/appointments";
+import { formatAppointmentDateTime } from "../utils/appointments";
 
 type Props = {
 	closeModal: () => void;
 };
-
+/**
+ * Component responsible for showing the user's data, date and time for the desired appointment scheduling, On confirmation, sends data to set the appointment, on other case, just close the dialog and return to user data form
+ * @param {Props} props
+ * @returns Modal with the appointment data asking for confirmation
+ */
 const ConfirmDialog: React.FC<Props> = ({ closeModal }) => {
 	const {
 		appointmentDate,
@@ -21,18 +25,25 @@ const ConfirmDialog: React.FC<Props> = ({ closeModal }) => {
 		userData,
 		confirmDialog,
 	} = useAppointmentStore();
-
+	/**
+	 * Dispatcher for the appointments reducer actions
+	 */
 	const dispatch = useAppointmentDispatch();
-
+	/**
+	 * Closes the confirmation modal
+	 */
 	const closeConfirmDialog = () => {
 		dispatch({ payload: false, type: ActionKind.SET_CONFIRM_DIALOG });
 	};
 
 	const [loading, setLoading] = useState(false);
-
-	const createAppointment = async () => {
+	/**
+	 * Sends the data to the server and try to sets the appointment
+	 * @returns {Promise<Response>} The response of the petition made to the server
+	 */
+	const createAppointment = async (): Promise<Response> => {
 		const appointmentData = {
-			datetime: parseAppointmentDateTime(appointmentDate, appointmentHour),
+			datetime: formatAppointmentDateTime(appointmentDate, appointmentHour),
 			name: userData.name,
 			email: userData.email,
 		};
@@ -48,6 +59,11 @@ const ConfirmDialog: React.FC<Props> = ({ closeModal }) => {
 		return result;
 	};
 
+	/**
+	 * Handles the response from the server, from the petition of scheduling an appointment.
+	 * Responsible of manipulating the loading state of the petition, and showns a notifications with the results of the operation.
+	 * On operation success, reinitialize the appointment state and closes all modals
+	 */
 	const handleCreation = async () => {
 		setLoading(true);
 		showNotification({

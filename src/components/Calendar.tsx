@@ -7,9 +7,16 @@ import { ActionKind } from "../reducers/AppointmentReducer";
 type Props = {
 	setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
+/**
+ * Component responsible for rendering the Calendar component, and handles the selection of the desired appointment date
+ * @param props
+ * @returns Calendar component
+ */
 const MyCalendar: React.FC<Props> = ({ setOpened }) => {
 	const [value, setValue] = useState(new Date());
+	/**
+	 * Dispatcher for the appointments reducer actions
+	 */
 	const dispatch = useAppointmentDispatch();
 
 	return (

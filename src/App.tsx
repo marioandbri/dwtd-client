@@ -9,7 +9,11 @@ import { NotificationsProvider } from "@mantine/notifications";
 
 function App() {
 	dayjs.locale("en-us");
+
 	const [opened, setOpened] = useState(false);
+	/**
+	 * Function to close the modal
+	 */
 	const closeModal = () => {
 		setOpened(false);
 	};

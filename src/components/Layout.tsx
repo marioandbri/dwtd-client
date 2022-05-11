@@ -3,7 +3,11 @@ import React, { ReactNode } from "react";
 type Props = {
 	children: ReactNode;
 };
-
+/**
+ * Component responsible for wrapping the application, and applying the styling options for the framework theme
+ * @param props
+ * @returns
+ */
 const Layout: React.FC<Props> = ({ children }) => {
 	return (
 		<MantineProvider

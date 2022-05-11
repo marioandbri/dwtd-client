@@ -11,21 +11,40 @@ type Props = {
 	closeModal: () => void;
 };
 
+/**
+ * Component responsible for mounting the HoursList and UserDataForm components
+ * @param {Props} props
+ * @returns {JSX.Element} A modal containing those components
+ */
 const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 	opened,
 	closeModal,
 }) => {
+	/**
+	 * Dispatcher for appointments reducer
+	 */
 	const dispatch = useAppointmentDispatch();
 	const [isUserFormVisible, setIsUserFormVisible] = useState(false);
+	/**
+	 * Display the HoursList Component to set the hour for the appointment
+	 */
 	const displayHours = () => setIsUserFormVisible(false);
+	/**
+	 * Display the UserDataForm Component to handle the inputs for the user's data
+	 */
 	const displayUserForm = () => setIsUserFormVisible(true);
 
-	const resetModal = () => {
+	/**
+	 * Closes the modal and resets the appointments state
+	 */
+	const resetAndCloseModal = () => {
 		closeModal();
 		setIsUserFormVisible(false);
 		dispatch({ payload: null, type: ActionKind.REINITIALIZE });
 	};
-
+	/**
+	 *  Handles when the HoursList Component is visible
+	 */
 	const isHoursVisible = opened && !isUserFormVisible;
 
 	return (
@@ -33,7 +52,7 @@ const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 			<Modal
 				transition={"slide-down"}
 				opened={isHoursVisible}
-				onClose={resetModal}
+				onClose={resetAndCloseModal}
 				title={"What is the expected time desired to dance with the Death"}
 			>
 				<HoursList displayUserForm={displayUserForm} />
@@ -42,12 +61,12 @@ const AppointmentModal: React.FC<PropsWithChildren<Props>> = ({
 			<Modal
 				transition={"slide-down"}
 				opened={isUserFormVisible}
-				onClose={resetModal}
+				onClose={resetAndCloseModal}
 				title={"Give your name and email to complete the appointment"}
 			>
 				<UserDataForm displayHours={displayHours} />
 			</Modal>
-			<ConfirmDialog closeModal={resetModal} />
+			<ConfirmDialog closeModal={resetAndCloseModal} />
 		</>
 	);
 };
